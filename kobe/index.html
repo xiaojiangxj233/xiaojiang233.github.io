@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Memory of Kobe Bryant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #center-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #kobe-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        #info-container {
+            margin-top: 20px;
+            border: 2px solid #333;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        #lang-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="Kobe.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="background"></div>
+
+    <button id="lang-toggle" onclick="toggleLanguage()">中文 / English</button>
+
+    <div id="center-container">
+        <img id="kobe-image" src="KOBE.jpg" alt="Kobe Bryant">
+        <div id="info-container">
+            <p id="info-text"></p>
+            <p id="time"></p>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            var now = new Date();
+            var kobePassingTime = new Date(2020, 0, 26, 10, 0, 0); // January is 0 in JavaScript
+
+            var timeDiff = now - kobePassingTime;
+            var seconds = Math.floor(timeDiff / 1000);
+
+            var timeElement = document.getElementById('time');
+            timeElement.innerHTML = "From January 26, 2020, 10:00 AM till now: " + seconds + " seconds";
+        }
+
+        function toggleLanguage() {
+            var infoText = document.getElementById('info-text');
+            var langToggle = document.getElementById('lang-toggle');
+
+            if (infoText.innerHTML === "科比已经去世") {
+                infoText.innerHTML = "Kobe has passed away";
+                langToggle.innerHTML = "中文 / English";
+            } else {
+                infoText.innerHTML = "科比已经去世";
+                langToggle.innerHTML = "中文 / English";
+            }
+        }
+
+        function setInitialLanguage() {
+            var userLanguage = navigator.language || navigator.userLanguage;
+
+            if (userLanguage.startsWith('zh')) {
+                toggleLanguage(); // Switch to Chinese if user's language is Chinese
+            }
+        }
+
+        setInterval(updateTime, 1000);
+        document.addEventListener("DOMContentLoaded", setInitialLanguage);
+    </script>
+</body>
+</html>
